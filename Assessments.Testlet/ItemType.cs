@@ -1,8 +1,8 @@
 ﻿namespace Assessments.Testlet
 {
-    public enum ItemTypeEnum
+    public enum ItemType
     {
         Pretest = 0,
-        Operational = 1
+        Operational = 1,
     }
 }

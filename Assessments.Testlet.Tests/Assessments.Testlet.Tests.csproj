@@ -1,8 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
+    <Nullable>enable</Nullable>
+    <LangVersion>8.0</LangVersion>
+    <!-- Switch to errors instead of warnings for nullable reference types in C# 8 -->
+    <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
+    
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -11,6 +15,10 @@
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Assessments.Testlet\Assessments.Testlet.csproj" />
   </ItemGroup>
 
 </Project>
