@@ -9,8 +9,6 @@
         private const int NumberOfOperationalItemsAllowed = 6;
         private const int NumberOfPretestItemsAllowed = 4;
 
-        /// <exception cref="Assessments.Testlet.TestletMustHaveFixedNumberOfItemsException"></exception>
-        /// <exception cref="Assessments.Testlet.TestletCreationValidationAggregateException"></exception>
         public void ValidateTestletCreationInput(string testletId, IReadOnlyList<Item> items)
         {
             if (items.Count != FixedNumberOfItemsAllowed)
