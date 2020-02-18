@@ -3,22 +3,22 @@ namespace Assessments.Testlet.Tests
     using System.Linq;
     using Xunit;
 
-    public class TestletCreatorTests
+    public class TestletValidatorTests
     {
         [Theory]
         [InlineData(5)]
         [InlineData(7)]
         [InlineData(9)]
-        public void TestletCreator_throws_exception_when_passed_more_or_less_than_10_items(int numberOfItems)
+        public void TestletValidator_throws_exception_when_passed_more_or_less_than_10_items(int numberOfItems)
         {
-            var creator = this.CreateDefaultTestletCreator();
+            var validator = this.CreateDefaultTestletValidator();
 
             var items = Enumerable
                 .Range(0, numberOfItems)
                 .Select(i => new Item())
                 .ToList();
 
-            void createTestlet() => creator.CreateTestlet("TestletId", items);
+            void createTestlet() => validator.ValidateTestletCreationInput("TestletId", items);
             var exception = Assert.Throws<TestletMustHaveFixedNumberOfItemsException>(createTestlet);
 
             Assert.Equal(10, exception.NumberOfItems);
@@ -31,13 +31,13 @@ namespace Assessments.Testlet.Tests
         [InlineData(5, ItemType.Operational, 5, ItemType.Pretest)]
         [InlineData(7, ItemType.Operational, 3, ItemType.Pretest)]
         [InlineData(9, ItemType.Operational, 1, ItemType.Pretest)]
-        public void TestletCreator_throws_exception_when_passed_items_do_not_contain_6_operational_and_4_pretest(
+        public void TestletValidator_throws_exception_when_passed_items_do_not_contain_6_operational_and_4_pretest(
             int firstItemsCount, 
             ItemType firstItemsType,
             int secondItemsCount, 
             ItemType secondItemsType)
         {
-            var creator = this.CreateDefaultTestletCreator();
+            var validator = this.CreateDefaultTestletValidator();
 
             var firstItems = Enumerable
                 .Range(0, firstItemsCount)
@@ -49,7 +49,7 @@ namespace Assessments.Testlet.Tests
 
             var allItems = firstItems.Union(secondItems).ToList();
 
-            void createTestlet() => creator.CreateTestlet("TestletId", allItems);
+            void createTestlet() => validator.ValidateTestletCreationInput("TestletId", allItems);
             var exception = Assert.Throws<TestletCreationValidationAggregateException>(createTestlet);
 
             Assert.NotEmpty(exception.Exceptions);
@@ -58,9 +58,9 @@ namespace Assessments.Testlet.Tests
             Assert.Contains(exception.Exceptions, e => e.ItemsOfType == ItemType.Operational);
         }
 
-        private TestletCreator CreateDefaultTestletCreator()
+        private TestletValidator CreateDefaultTestletValidator()
         {
-            return new TestletCreator();
+            return new TestletValidator();
         }
     }
 }
