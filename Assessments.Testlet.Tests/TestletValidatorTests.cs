@@ -9,7 +9,7 @@ namespace Assessments.Testlet.Tests
         [InlineData(5)]
         [InlineData(7)]
         [InlineData(9)]
-        public void TestletValidator_throws_exception_when_passed_more_or_less_than_10_items(int numberOfItems)
+        public void Validator_throws_exception_when_passed_more_or_less_than_10_items(int numberOfItems)
         {
             var validator = this.CreateDefaultTestletValidator();
 
@@ -31,7 +31,7 @@ namespace Assessments.Testlet.Tests
         [InlineData(5, ItemType.Operational, 5, ItemType.Pretest)]
         [InlineData(7, ItemType.Operational, 3, ItemType.Pretest)]
         [InlineData(9, ItemType.Operational, 1, ItemType.Pretest)]
-        public void TestletValidator_throws_exception_when_passed_items_do_not_contain_6_operational_and_4_pretest(
+        public void Validator_throws_exception_when_passed_items_do_not_contain_6_operational_and_4_pretest(
             int firstItemsCount, 
             ItemType firstItemsType,
             int secondItemsCount, 
