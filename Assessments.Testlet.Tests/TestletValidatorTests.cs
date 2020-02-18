@@ -58,9 +58,6 @@ namespace Assessments.Testlet.Tests
             Assert.Contains(exception.Exceptions, e => e.ItemsOfType == ItemType.Operational);
         }
 
-        private TestletValidator CreateDefaultTestletValidator()
-        {
-            return new TestletValidator();
-        }
+        private TestletValidator CreateDefaultTestletValidator() => new TestletValidator();
     }
 }

@@ -5,19 +5,21 @@
     public class TestletCreator : ITestletCreator
     {
         private readonly ITestletValidator validator;
+        private readonly ITestletItemsRandomizer randomizer;
 
-        public TestletCreator(ITestletValidator validator)
+        public TestletCreator(ITestletValidator validator, ITestletItemsRandomizer randomizer)
         {
             this.validator = validator;
+            this.randomizer = randomizer;
         }
 
-        /// <exception cref="Assessments.Testlet.TestletMustHaveFixedNumberOfItemsException"></exception>
-        /// <exception cref="Assessments.Testlet.TestletCreationValidationAggregateException"></exception>
         public Testlet CreateTestlet(string testletId, IReadOnlyList<Item> items)
         {
             this.validator.ValidateTestletCreationInput(testletId, items);
 
-            return new Testlet(testletId, items);
+            var randomItems = this.randomizer.Randomize(items);
+
+            return new Testlet(testletId, randomItems);
         }
     }
 }
