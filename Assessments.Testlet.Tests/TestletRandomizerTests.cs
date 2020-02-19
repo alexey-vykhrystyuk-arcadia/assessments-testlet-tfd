@@ -51,6 +51,30 @@ namespace Assessments.Testlet.Tests
             Assert.All(firstTwoRandomizedItems, i => Assert.Contains(i, items));
         }
 
+        [Fact]
+        public void Randomizer_returns_items_where_remaining_8_out_of_10_items_contains_2_pretest_and_6_operational()
+        {
+            var randomizer = this.CreateDefaultTestletItemsRandomizer();
+
+            var items = CreateItems(new[]
+            {
+                ItemType.Operational,
+                ItemType.Pretest,
+                ItemType.Operational,
+                ItemType.Operational,
+                ItemType.Pretest,
+                ItemType.Operational,
+                ItemType.Pretest,
+                ItemType.Operational,
+                ItemType.Operational,
+                ItemType.Pretest,
+            });
+            var randomizedItems = randomizer.Randomize(items);
+
+            var remainingRandomizedItemsByType = randomizedItems.Skip(NumberOfFirstPretestItems).ToLookup(i => i.Type);
+            Assert.Equal(2, remainingRandomizedItemsByType[ItemType.Pretest].Count());
+            Assert.Equal(6, remainingRandomizedItemsByType[ItemType.Operational].Count());
+        }
 
         public static IEnumerable<object[]> GetAllButFirstTwoItemsAreRandomlyOrderedTestData => new List<object[]>
         {
