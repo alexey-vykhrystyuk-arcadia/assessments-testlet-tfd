@@ -110,7 +110,7 @@ namespace Assessments.Testlet.Tests
             Assert.Equal(allButFirstTwoRandomizedItems, itemsWithExpectedOrder);
         }
 
-        private TestletItemsRandomizer CreateDefaultTestletItemsRandomizer() => new TestletItemsRandomizer();
+        private ITestletItemsRandomizer CreateDefaultTestletItemsRandomizer() => new TestletItemsRandomizer();
 
         private TestletItemsRandomizer CreatePseudoRandomTestletItemsRandomizer(IReadOnlyList<int> pseudoRandomIntegers) => new TestletItemsRandomizer(
             new FakeRandom(pseudoRandomIntegers));
