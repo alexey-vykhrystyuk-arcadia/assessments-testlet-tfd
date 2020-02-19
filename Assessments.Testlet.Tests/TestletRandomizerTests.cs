@@ -148,9 +148,9 @@ namespace Assessments.Testlet.Tests
             Assert.Equal(allButFirstTwoRandomizedItems, itemsWithExpectedOrder);
         }
 
-        private ITestletItemsRandomizer CreateDefaultTestletItemsRandomizer() => new TestletItemsRandomizer(new Random(100500));
+        private ITestletItemsRandomizer CreateDefaultTestletItemsRandomizer() => new PretestsFirstTestletItemsRandomizer(new Random(100500));
 
-        private TestletItemsRandomizer CreatePseudoRandomTestletItemsRandomizer(IReadOnlyList<int> pseudoRandomIntegers) => new TestletItemsRandomizer(
+        private PretestsFirstTestletItemsRandomizer CreatePseudoRandomTestletItemsRandomizer(IReadOnlyList<int> pseudoRandomIntegers) => new PretestsFirstTestletItemsRandomizer(
             new FakeRandom(pseudoRandomIntegers));
 
         private static Item[] CreateItems(IEnumerable<ItemType> types) => types

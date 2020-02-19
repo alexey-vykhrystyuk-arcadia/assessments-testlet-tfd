@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class TestletItemsRandomizer : ITestletItemsRandomizer
+    public class PretestsFirstTestletItemsRandomizer : ITestletItemsRandomizer
     {
         private const int NumberOfFirstPretestItems = 2;
         private readonly Random random;
 
-        public TestletItemsRandomizer(Random? random = default)
+        public PretestsFirstTestletItemsRandomizer(Random? random = default)
         {
             this.random = random ?? new Random();
         }
