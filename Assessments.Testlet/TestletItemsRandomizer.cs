@@ -18,31 +18,25 @@
         {
             _ = items ?? throw new ArgumentNullException(nameof(items));
 
-            var randomizedItems = new List<Item>();
-
             var pretestItemIndicesToRandomize = items
-                .SelectIndicesWhere((item, index) => item.Type == ItemType.Pretest)
+                .SelectIndicesWhere((item, _) => item.Type == ItemType.Pretest)
                 .ToList();
 
-            var randomizedPretestItemIndices = new int[NumberOfFirstPretestItems];
-
-            for (int i = 0; i < NumberOfFirstPretestItems; i++)
-            {
-                var pretestItemIndex = this.TakeRandomIndex(pretestItemIndicesToRandomize);
-                randomizedItems.Add(items[pretestItemIndex]);
-                randomizedPretestItemIndices[i] = pretestItemIndex;
-            }
+            var pretestItemsRandomizedIndices = Enumerable
+                .Range(0, NumberOfFirstPretestItems)
+                .Select(i => this.TakeRandomIndex(pretestItemIndicesToRandomize))
+                .ToArray();
 
             var otherItemIndicesToRandomize = items
-                .SelectIndicesWhere((item, index) => !randomizedPretestItemIndices.Contains(index))
+                .SelectIndicesWhere((_, index) => !pretestItemsRandomizedIndices.Contains(index))
                 .ToList();
 
-            for (int i = 0; i < items.Count - NumberOfFirstPretestItems; i++)
-            {
-                var itemIndex = this.TakeRandomIndex(otherItemIndicesToRandomize);
-                randomizedItems.Add(items[itemIndex]);
-            }
+            var otherItemsRandomizedIndices = Enumerable
+                .Range(0, otherItemIndicesToRandomize.Count)
+                .Select(i => this.TakeRandomIndex(otherItemIndicesToRandomize));
 
+            var randomizedItemIndices = pretestItemsRandomizedIndices.Union(otherItemsRandomizedIndices).ToArray();
+            var randomizedItems = randomizedItemIndices.Select(i => items[i]).ToArray();
             return randomizedItems;
         }
 
