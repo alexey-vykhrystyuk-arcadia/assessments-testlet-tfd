@@ -21,14 +21,7 @@
 
             var shuffledItems = this.ShuffleItems(items);
 
-            var numberOfPretestItemsMovedToStart = 0;
-            for (int i = 0; i < shuffledItems.Count; i++)
-            {
-                if (shuffledItems[i].Type == ItemType.Pretest && numberOfPretestItemsMovedToStart < this.numberOfFirstPretestItems)
-                {
-                    shuffledItems.Swap(i, numberOfPretestItemsMovedToStart++);
-                }
-            }
+            this.MovePretestItemsToStart(shuffledItems);
 
             return shuffledItems;
         }
@@ -44,6 +37,25 @@
             }
 
             return shuffledItems;
+        }
+
+        private void MovePretestItemsToStart(IList<Item> items)
+        {
+            var numberOfPretestItemsMovedToStart = 0;
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].Type != ItemType.Pretest)
+                {
+                    continue;
+                }
+
+                items.Swap(i, numberOfPretestItemsMovedToStart++);
+
+                if (numberOfPretestItemsMovedToStart >= this.numberOfFirstPretestItems)
+                {
+                    break;
+                }
+            }
         }
     }
 }
