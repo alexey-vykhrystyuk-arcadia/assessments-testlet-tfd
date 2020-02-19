@@ -6,6 +6,8 @@ namespace Assessments.Testlet.Tests
 
     public class TestletRandomizerTests
     {
+        private const int NumberOfFirstPretestItems = 2;
+
         public static IEnumerable<object[]> GetFirstTwoItemsAreAlwaysOfPretestTypeTestData => new List<object[]>
         {
             new object[]
@@ -43,7 +45,7 @@ namespace Assessments.Testlet.Tests
 
             var randomizedItems = randomizer.Randomize(items);
 
-            var firstTwoRandomizedItems = randomizedItems.Take(2).ToList();
+            var firstTwoRandomizedItems = randomizedItems.Take(NumberOfFirstPretestItems).ToList();
             Assert.True(firstTwoRandomizedItems.All(i => i.Type == ItemType.Pretest));
             Assert.All(firstTwoRandomizedItems, i => Assert.Contains(i, items));
         }
@@ -100,10 +102,10 @@ namespace Assessments.Testlet.Tests
 
             var randomizedItems = randomizer.Randomize(items);
 
-            var allButFirstTwoRandomizedItems = randomizedItems.Skip(2).ToArray();
+            var allButFirstTwoRandomizedItems = randomizedItems.Skip(NumberOfFirstPretestItems).ToArray();
 
             var itemsWithExpectedOrder = indicesWithExpectedOrderOfItems
-                .Skip(2)
+                .Skip(NumberOfFirstPretestItems)
                 .Select(index => items[index])
                 .ToArray();
 
