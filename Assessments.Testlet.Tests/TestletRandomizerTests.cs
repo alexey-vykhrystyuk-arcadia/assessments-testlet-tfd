@@ -39,6 +39,22 @@ namespace Assessments.Testlet.Tests
         };
 
         [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        public void Randomizer_handles_lack_of_pretest_items_correctly(int numberOfPretestItems)
+        {
+            var randomizer = this.CreateDefaultTestletItemsRandomizer();
+
+            var items = Enumerable
+                .Range(0, numberOfPretestItems)
+                .Select(i => new Item { Type = ItemType.Pretest })
+                .Union(new [] { new Item { Type = ItemType.Operational } })
+                .ToArray();
+            var randomizedItems = randomizer.Randomize(items);
+            Assert.Equal(numberOfPretestItems, randomizedItems.Where(i => i.Type == ItemType.Pretest).Count());
+        }
+
+        [Theory]
         [MemberData(nameof(GetFirstTwoItemsAreAlwaysOfPretestTypeTestData))]
         public void Randomizer_returns_items_where_first_2_are_always_of_pretest_type(Item[] items)
         {
@@ -132,7 +148,7 @@ namespace Assessments.Testlet.Tests
             Assert.Equal(allButFirstTwoRandomizedItems, itemsWithExpectedOrder);
         }
 
-        private ITestletItemsRandomizer CreateDefaultTestletItemsRandomizer() => new TestletItemsRandomizer();
+        private ITestletItemsRandomizer CreateDefaultTestletItemsRandomizer() => new TestletItemsRandomizer(new Random(100500));
 
         private TestletItemsRandomizer CreatePseudoRandomTestletItemsRandomizer(IReadOnlyList<int> pseudoRandomIntegers) => new TestletItemsRandomizer(
             new FakeRandom(pseudoRandomIntegers));
