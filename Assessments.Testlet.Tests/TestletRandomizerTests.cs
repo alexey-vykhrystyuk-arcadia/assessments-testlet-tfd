@@ -108,7 +108,7 @@ namespace Assessments.Testlet.Tests
                         ItemType.Operational, // 5
                     }),
                     PseudoRandomIntegers = new [] { 1, 0, 3, 2, 1, 0 },
-                    IndicesWithExpectedOrderOfItems = new [] { 2, 0, 5, 4, 3, 1 },
+                    IndicesWithExpectedOrderOfItems = new [] { 2, 3, 4, 5, 0, 1 },
                 }
             },
             new object[]
@@ -125,7 +125,7 @@ namespace Assessments.Testlet.Tests
                         ItemType.Pretest, // 5
                     }),
                     PseudoRandomIntegers = new [] { 1, 1, 2, 2, 0, 0 },
-                    IndicesWithExpectedOrderOfItems = new [] { 4, 5, 2, 3, 0, 1 },
+                    IndicesWithExpectedOrderOfItems = new [] { 4, 5, 3, 2, 0, 1 },
                 }
             },
         };

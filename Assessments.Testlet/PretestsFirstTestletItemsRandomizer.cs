@@ -19,36 +19,31 @@
         {
             _ = items ?? throw new ArgumentNullException(nameof(items));
 
-            var pretestItemIndicesToRandomize = items
-                .SelectIndicesWhere((item, _) => item.Type == ItemType.Pretest)
-                .ToList();
+            var shuffledItems = this.ShuffleItems(items);
 
-            var pretestItemsRandomizedIndices = Enumerable
-                .Range(0, Math.Min(numberOfFirstPretestItems, pretestItemIndicesToRandomize.Count))
-                .Select(i => this.PopRandomIndex(pretestItemIndicesToRandomize))
-                .ToArray();
+            var numberOfPretestItemsMovedToStart = 0;
+            for (int i = 0; i < shuffledItems.Count; i++)
+            {
+                if (shuffledItems[i].Type == ItemType.Pretest && numberOfPretestItemsMovedToStart < this.numberOfFirstPretestItems)
+                {
+                    shuffledItems.Swap(i, numberOfPretestItemsMovedToStart++);
+                }
+            }
 
-            var otherItemIndicesToRandomize = items
-                .SelectIndicesWhere((_, index) => !pretestItemsRandomizedIndices.Contains(index))
-                .ToList();
-
-            var otherItemsRandomizedIndices = Enumerable
-                .Range(0, otherItemIndicesToRandomize.Count)
-                .Select(i => this.PopRandomIndex(otherItemIndicesToRandomize))
-                .ToArray();
-
-            var randomizedItemIndices = pretestItemsRandomizedIndices.Union(otherItemsRandomizedIndices);
-            var randomizedItems = randomizedItemIndices.Select(i => items[i]).ToArray();
-            return randomizedItems;
+            return shuffledItems;
         }
 
-        private int PopRandomIndex(IList<int> indicesToRandomize)
+        private List<Item> ShuffleItems(IEnumerable<Item> items)
         {
-            var randomIndex = this.random.Next(indicesToRandomize.Count);
-            var index = indicesToRandomize[randomIndex];
-            indicesToRandomize.RemoveAt(randomIndex);
-            return index;
+            var shuffledItems = items.ToList();
+
+            for (var i = shuffledItems.Count - 1; i >= 0; i--)
+            {
+                int randomIndex = this.random.Next(i + 1);
+                shuffledItems.Swap(randomIndex, i);
+            }
+
+            return shuffledItems;
         }
     }
-    
 }
