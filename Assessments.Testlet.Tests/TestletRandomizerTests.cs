@@ -148,10 +148,10 @@ namespace Assessments.Testlet.Tests
             Assert.Equal(allButFirstTwoRandomizedItems, itemsWithExpectedOrder);
         }
 
-        private ITestletItemsRandomizer CreateDefaultTestletItemsRandomizer() => new PretestsFirstTestletItemsRandomizer(new Random(100500));
+        private ITestletItemsRandomizer CreateDefaultTestletItemsRandomizer() => new PretestsFirstTestletItemsRandomizer(NumberOfFirstPretestItems, new Random(100500));
 
-        private PretestsFirstTestletItemsRandomizer CreatePseudoRandomTestletItemsRandomizer(IReadOnlyList<int> pseudoRandomIntegers) => new PretestsFirstTestletItemsRandomizer(
-            new FakeRandom(pseudoRandomIntegers));
+        private PretestsFirstTestletItemsRandomizer CreatePseudoRandomTestletItemsRandomizer(IReadOnlyList<int> pseudoRandomIntegers)
+            => new PretestsFirstTestletItemsRandomizer(NumberOfFirstPretestItems, new FakeRandom(pseudoRandomIntegers));
 
         private static Item[] CreateItems(IEnumerable<ItemType> types) => types
             .Select((t, i) => new Item

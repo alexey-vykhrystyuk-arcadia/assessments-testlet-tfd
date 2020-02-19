@@ -6,11 +6,12 @@
 
     public class PretestsFirstTestletItemsRandomizer : ITestletItemsRandomizer
     {
-        private const int NumberOfFirstPretestItems = 2;
+        private readonly int numberOfFirstPretestItems;
         private readonly Random random;
 
-        public PretestsFirstTestletItemsRandomizer(Random? random = default)
+        public PretestsFirstTestletItemsRandomizer(int numberOfFirstPretestItems, Random? random = default)
         {
+            this.numberOfFirstPretestItems = numberOfFirstPretestItems;
             this.random = random ?? new Random();
         }
 
@@ -23,7 +24,7 @@
                 .ToList();
 
             var pretestItemsRandomizedIndices = Enumerable
-                .Range(0, Math.Min(NumberOfFirstPretestItems, pretestItemIndicesToRandomize.Count))
+                .Range(0, Math.Min(numberOfFirstPretestItems, pretestItemIndicesToRandomize.Count))
                 .Select(i => this.PopRandomIndex(pretestItemIndicesToRandomize))
                 .ToArray();
 
