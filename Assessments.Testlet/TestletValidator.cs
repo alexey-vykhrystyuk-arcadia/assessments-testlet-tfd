@@ -1,5 +1,6 @@
 ﻿namespace Assessments.Testlet
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -11,6 +12,9 @@
 
         public void ValidateTestletCreationInput(string testletId, IReadOnlyList<Item> items)
         {
+            _ = testletId ?? throw new ArgumentNullException(nameof(testletId));
+            _ = items ?? throw new ArgumentNullException(nameof(items));
+
             if (items.Count != FixedNumberOfItemsAllowed)
             {
                 throw new TestletMustHaveFixedNumberOfItemsException(FixedNumberOfItemsAllowed);

@@ -16,6 +16,8 @@
 
         public IReadOnlyList<Item> Randomize(IReadOnlyList<Item> items)
         {
+            _ = items ?? throw new ArgumentNullException(nameof(items));
+
             var randomizedItems = new List<Item>();
 
             var pretestItemIndicesToRandomize = items
